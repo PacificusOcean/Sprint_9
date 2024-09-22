@@ -2,62 +2,42 @@ package mainPage;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.junit.After;
+import org.junit.Before;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.*;
+import scooter.Scooter;
 
-public class ScooterPage {
+public abstract class ScooterPage {
 
-    private WebDriver driver;
-
+    WebDriver driver;
+    WebDriverWait wait;
+    Scooter scooter;
     public ScooterPage(WebDriver driver) {
         this.driver = driver;
+
+
     }
-
-    private By dropdownArrow = By.xpath("//div[@class='important-questions']//button[@class='dropdown-toggle']");
-    private By dropdownText = By.xpath("//div[@class='important-questions']//div[@class='dropdown-menu']");
-    private By orderTopButton = By.id("order-top");
-    private By orderButton1 = By.xpath("//button[contains(text(), 'Заказать сейчас')]");
-    private By orderButton2 = By.xpath("//button[contains(text(), 'Заказать комбо')]");
-    private By nameInput = By.id("name");
-    private By emailInput = By.id("email");
-    private By phoneInput = By.id("phone");
-    private By successMessage = By.xpath("//div[@class='order-success']");
-    private By orderBottomButton = By.id("order-bottom");
-
-    public void clickDropdownArrow() {
-        driver.findElement(dropdownArrow).click();
+    @Before
+    public void setUp() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-search-engine-choice-screen");
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, 3);
+        driver.get("https://qa-scooter.praktikum-services.ru/");
+        scooter = new Scooter(driver);
+        WebElement cookieButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("rcc-confirm-button")));
+        cookieButton.click();
     }
+    @After
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit(); // Закрываем браузер после выполнения тестов
+        }
 
-    public boolean isDropdownTextDisplayed() {
-        return driver.findElement(dropdownText).isDisplayed();
     }
-
-    public void clickOrderTopButton() {
-        driver.findElement(orderTopButton).click();
-    }
-
-    public boolean isOrderButtonsDisplayed() {
-        return driver.findElement(orderButton1).isDisplayed() && driver.findElement(orderButton2).isDisplayed();
-    }
-
-    public void fillOrderForm(String name, String email, String phone) {
-        driver.findElement(nameInput).sendKeys(name);
-        driver.findElement(emailInput).sendKeys(email);
-        driver.findElement(phoneInput).sendKeys(phone);
-    }
-
-    public void clickOrderButton1() {
-        driver.findElement(orderButton1).click();
-    }
-
-    public boolean isSuccessMessageDisplayed() {
-        return driver.findElement(successMessage).isDisplayed();
-    }
-
-    public void clickOrderBottomButton() {
-        driver.findElement(orderBottomButton).click();
-    }
-
-
 }
 
-
-//fix branch
