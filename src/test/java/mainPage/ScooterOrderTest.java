@@ -23,7 +23,7 @@ public class ScooterOrderTest extends ScooterPage{
     private final String period;
 
 
-        public ScooterOrderTest(WebDriver driver, String name, String lastName, String address, String metro, String phone, String date, String period) {
+        public ScooterOrderTest( String name, String lastName, String address, String metro, String phone, String date, String period) {
         super(driver);
         this.name = name;
         this.lastName = lastName;
@@ -37,8 +37,8 @@ public class ScooterOrderTest extends ScooterPage{
     @Parameterized.Parameters // Тестовые данные
     public static Object[][] orderButton() {
         return new Object[][]{
-                {"Семён", "Семёныч", "Усачева", "Вернадского", "89112111111", "22.09.2024", "сутки"},
-                {"Егор", "Егорыч", "Берег", "Университет", "89112111122", "22.09.2024", "двое"}
+                {"Семён", "Семёныч", "Усачева", "Вернадского", "89112111111", "25.09.2024", "сутки"},
+                {"Егор", "Егорыч", "Берег", "Университет", "89112111122", "25.09.2024", "двое суток"}
         };
     }
     @Test

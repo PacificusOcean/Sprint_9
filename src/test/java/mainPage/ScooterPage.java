@@ -23,6 +23,7 @@ public abstract class ScooterPage {
     }
     @Before
     public void setUp() {
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-search-engine-choice-screen");
         driver = new ChromeDriver();
